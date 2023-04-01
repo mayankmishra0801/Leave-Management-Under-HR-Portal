@@ -1,7 +1,8 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 var bcrypt = require("bcryptjs");
 var passportLocalMongoose = require("passport-local-mongoose");
-var employeeSchema = new Mongoose.Schema({
+var Schema=mongoose.Schema
+var employeeSchema = new Schema({
 
   name:String,
   type:String,
@@ -17,34 +18,35 @@ var employeeSchema = new Mongoose.Schema({
 
 });
 
-EmployeeSchema.plugin(passportLocalMongoose);
-var Employee = (module.exports = mongoose,model("Employee",employeeSchema))
+// EmployeeSchema.plugin(passportLocalMongoose);
+var Employee =  mongoose.model("Employee",employeeSchema)
+module.exports=Employee
 
-module.exports.createEmployee = function(newEmployee, callback){
-    bcrypt.genSalt(10, function(err,salt){
-        bcrypt.hash(newEmployee.password,salt,function(err,hash){
-            newEmployee.password = hash;
-            newEmployee.save(callback);
-        });
-    });
-};
+// module.exports.createEmployee = function(newEmployee, callback){
+//     bcrypt.genSalt(10, function(err,salt){
+//         bcrypt.hash(newEmployee.password,salt,function(err,hash){
+//             newEmployee.password = hash;
+//             newEmployee.save(callback);
+//         });
+//     });
+// };
 
-module.exports.getUserByUserName =  function(username, callback){
-    var query = {username:username};
-    Employee.findOne(query,callback);
-};
+// module.exports.getUserByUserName =  function(username, callback){
+//     var query = {username:username};
+//     Employee.findOne(query,callback);
+// };
 
-module.exports.getUserById = function(id, callback){
-    Student.findById(id,callback);
-};
+// module.exports.getUserById = function(id, callback){
+//     Student.findById(id,callback);
+// };
 
-module.exports.comparePassword = function(candidatePassword,hash,callback){
-    bcrypt.compare(candidatePassword,hash,function(err,passwordFound){
+// module.exports.comparePassword = function(candidatePassword,hash,callback){
+//     bcrypt.compare(candidatePassword,hash,function(err,passwordFound){
       
-        if(err) throw err;
+//         if(err) throw err;
 
-        callback(null,passwordFound)
+//         callback(null,passwordFound)
 
 
-    });
-}
+//     });
+// }
